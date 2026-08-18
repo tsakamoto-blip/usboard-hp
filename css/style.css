@@ -88,14 +88,6 @@ a:hover { color: #6d3ff0; }
   overflow: hidden;
 }
 
-@media (max-width: 640px) {
-  .hero {
-    height: 112vw;
-    min-height: 380px;
-    max-height: 560px;
-  }
-}
-
 .hero-slides { position: absolute; inset: 0; }
 
 .hero-slide {
@@ -565,3 +557,31 @@ a:hover { color: #6d3ff0; }
 
 .footer-nav a { font-size: 13px; letter-spacing: 0.06em; color: rgba(244, 244, 242, 0.72); }
 .footer-nav a:hover { color: #fff; }
+
+/* Mobile overrides */
+@media (max-width: 640px) {
+  .hero {
+    height: 112vw;
+    min-height: 380px;
+    max-height: 560px;
+  }
+
+  .hero-title {
+    font-size: clamp(28px, 9vw, 38px);
+  }
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-nav {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px 14px;
+  }
+
+  .main-nav a {
+    font-size: 12px;
+  }
+}
