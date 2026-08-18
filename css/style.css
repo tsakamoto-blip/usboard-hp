@@ -88,6 +88,14 @@ a:hover { color: #6d3ff0; }
   overflow: hidden;
 }
 
+@media (max-width: 640px) {
+  .hero {
+    height: 112vw;
+    min-height: 380px;
+    max-height: 560px;
+  }
+}
+
 .hero-slides { position: absolute; inset: 0; }
 
 .hero-slide {
@@ -136,7 +144,7 @@ a:hover { color: #6d3ff0; }
 
 .hero-title {
   margin: 0;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Anton', sans-serif;
   font-style: italic;
   font-weight: 700;
   font-size: clamp(38px, 6.4vw, 86px);
