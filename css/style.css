@@ -508,10 +508,23 @@ a:hover { color: #6d3ff0; }
   display: flex;
   flex-direction: column;
   gap: 20px;
-  transition: background 200ms ease;
+  border-bottom: 3px solid transparent;
+  transition: background 200ms ease, border-color 200ms ease;
 }
 
 .link-card:hover { background: #fbfbfa; }
+
+.link-card--globaline:hover { border-bottom-color: #8ec51f; }
+.link-card--globaline:hover .link-name,
+.link-card--globaline:hover .link-cta { color: #8ec51f; }
+
+.link-card--exsea:hover { border-bottom-color: #00a0e9; }
+.link-card--exsea:hover .link-name,
+.link-card--exsea:hover .link-cta { color: #00a0e9; }
+
+.link-card--bluemeister:hover { border-bottom-color: #ffd400; }
+.link-card--bluemeister:hover .link-name,
+.link-card--bluemeister:hover .link-cta { color: #ffd400; }
 
 .link-logo { height: 84px; display: flex; align-items: center; }
 
