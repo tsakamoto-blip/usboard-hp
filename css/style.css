@@ -137,6 +137,7 @@ a:hover { color: #6d3ff0; }
 .hero-title {
   margin: 0;
   font-family: 'Anton', sans-serif;
+  font-style: italic;
   font-weight: 700;
   font-size: clamp(38px, 6.4vw, 86px);
   line-height: 0.98;
