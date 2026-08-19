@@ -73,10 +73,17 @@ a:hover { color: #6d3ff0; }
 }
 
 .main-nav a {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: 0.06em;
   color: #35373c;
+}
+
+.main-nav a:hover {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Hero */
