@@ -305,9 +305,15 @@ a:hover { color: #6d3ff0; }
 /* About */
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: clamp(32px, 6vw, 90px);
+  grid-template-columns: minmax(150px, 190px) 1fr;
+  gap: clamp(24px, 4vw, 64px);
   align-items: start;
+}
+
+@media (max-width: 760px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .lead {
@@ -545,7 +551,6 @@ a:hover { color: #6d3ff0; }
 }
 
 .link-cta-group {
-  margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
