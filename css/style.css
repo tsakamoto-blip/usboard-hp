@@ -541,6 +541,10 @@ a:hover { color: #6d3ff0; }
 .link-card--bluemeister:hover .link-name { color: #ffd400; }
 .link-card--bluemeister .link-cta:hover { color: #ffd400; }
 
+.link-card--cargobridge:hover { border-bottom-color: #f26522; }
+.link-card--cargobridge:hover .link-name { color: #f26522; }
+.link-card--cargobridge .link-cta:hover { color: #f26522; }
+
 .link-logo { height: 84px; display: flex; align-items: center; }
 
 .link-name {
@@ -553,7 +557,7 @@ a:hover { color: #6d3ff0; }
 .link-keyword {
   font-family: 'Zen Kaku Gothic New', sans-serif;
   font-weight: 900;
-  font-size: clamp(26px, 2.6vw, 34px);
+  font-size: clamp(20px, 2vw, 26px);
   line-height: 1.3;
   letter-spacing: 0.02em;
   color: var(--ink);
