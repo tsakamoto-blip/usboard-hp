@@ -327,6 +327,7 @@ a:hover { color: #6d3ff0; }
   letter-spacing: 0.03em;
   color: #4a4d54;
   text-wrap: pretty;
+  white-space: pre-line;
 }
 
 .body-text:last-child { margin-bottom: 0; }
@@ -543,12 +544,19 @@ a:hover { color: #6d3ff0; }
   color: var(--muted);
 }
 
-.link-cta {
+.link-cta-group {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.link-cta {
   font-family: 'Barlow', sans-serif;
   font-size: 12px;
   letter-spacing: 0.16em;
   color: var(--ink);
+  white-space: nowrap;
 }
 
 /* Footer */
