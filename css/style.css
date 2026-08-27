@@ -296,6 +296,8 @@ a:hover { color: #6d3ff0; }
 
 .section-title--light { color: #f4f4f2; margin-bottom: 10px; }
 
+.no-break { white-space: nowrap; }
+
 .rule {
   width: 56px;
   height: 3px;
