@@ -305,8 +305,8 @@ a:hover { color: #6d3ff0; }
 /* About */
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(150px, 190px) 1fr;
-  gap: clamp(24px, 4vw, 64px);
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: clamp(32px, 6vw, 90px);
   align-items: start;
 }
 
@@ -317,23 +317,29 @@ a:hover { color: #6d3ff0; }
 }
 
 .lead {
-  margin: 0 0 26px;
+  margin: 0 0 40px;
   font-size: clamp(17px, 1.5vw, 21px);
-  font-weight: 500;
-  line-height: 2;
+  font-weight: 700;
+  line-height: 1.8;
   letter-spacing: 0.02em;
   color: #16181c;
   text-wrap: pretty;
 }
 
+.about-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .body-text {
-  margin: 0 0 26px;
+  margin: 0 0 clamp(28px, 4vw, 40px);
   font-size: 15px;
   line-height: 2.1;
   letter-spacing: 0.03em;
   color: #4a4d54;
+  text-align: center;
   text-wrap: pretty;
-  white-space: pre-line;
 }
 
 .body-text:last-child { margin-bottom: 0; }
@@ -522,16 +528,16 @@ a:hover { color: #6d3ff0; }
 .link-card:hover { background: #fbfbfa; }
 
 .link-card--globaline:hover { border-bottom-color: #8ec51f; }
-.link-card--globaline:hover .link-name,
-.link-card--globaline:hover .link-cta { color: #8ec51f; }
+.link-card--globaline:hover .link-name { color: #8ec51f; }
+.link-card--globaline .link-cta:hover { color: #8ec51f; }
 
 .link-card--exsea:hover { border-bottom-color: #00a0e9; }
-.link-card--exsea:hover .link-name,
-.link-card--exsea:hover .link-cta { color: #00a0e9; }
+.link-card--exsea:hover .link-name { color: #00a0e9; }
+.link-card--exsea .link-cta:hover { color: #00a0e9; }
 
 .link-card--bluemeister:hover { border-bottom-color: #ffd400; }
-.link-card--bluemeister:hover .link-name,
-.link-card--bluemeister:hover .link-cta { color: #ffd400; }
+.link-card--bluemeister:hover .link-name { color: #ffd400; }
+.link-card--bluemeister .link-cta:hover { color: #ffd400; }
 
 .link-logo { height: 84px; display: flex; align-items: center; }
 
