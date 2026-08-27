@@ -323,6 +323,7 @@ a:hover { color: #6d3ff0; }
   line-height: 1.8;
   letter-spacing: 0.02em;
   color: #16181c;
+  text-align: center;
   text-wrap: pretty;
 }
 
