@@ -292,6 +292,7 @@ a:hover { color: #6d3ff0; }
   font-size: clamp(28px, 3.4vw, 44px);
   line-height: 1.24;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .section-title--light { color: #f4f4f2; margin-bottom: 10px; }
@@ -307,9 +308,9 @@ a:hover { color: #6d3ff0; }
 /* About */
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(180px, 260px) 1fr;
+  grid-template-columns: minmax(200px, 340px) 1fr;
   gap: clamp(32px, 6vw, 90px);
-  align-items: center;
+  align-items: start;
 }
 
 @media (max-width: 760px) {
