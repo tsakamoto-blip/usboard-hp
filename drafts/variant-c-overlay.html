@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USBOARD GROUP — 案C:オーバーレイ型</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Barlow+Condensed:ital,wght@0,500;0,600;1,600;1,700&family=Barlow:wght@400;500&family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* --- 案C: フルブリード・オーバーレイ型 --- */
+  .draft-banner { background:#6d3ff0; color:#fff; text-align:center; font-size:13px; letter-spacing:.05em; padding:10px; position:sticky; top:0; z-index:100; }
+  .draft-banner a { color:#fff; text-decoration:underline; }
+
+  .message-intro--c {
+    position: relative;
+    min-height: clamp(420px, 60vw, 680px);
+    overflow: hidden;
+  }
+  .message-intro--c img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+  .message-intro--c .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(15,17,20,0.15) 0%, rgba(15,17,20,0.35) 55%, rgba(15,17,20,0.95) 100%);
+  }
+  .message-heading--c {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: clamp(40px, 6vw, 72px) clamp(24px, 5vw, 90px);
+  }
+</style>
+</head>
+<body>
+
+<div class="draft-banner">案C: フルブリード・オーバーレイ型(写真の上に見出しを重ねる) &mdash; <a href="./">他の案を見る</a></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo">
+      <img class="logo-img" src="../assets/img/UBロゴ.png" alt="USBOARD GROUP">
+    </a>
+    <nav class="main-nav">
+      <a href="#message">代表メッセージ</a>
+    </nav>
+  </div>
+  <div class="gradient-bar"></div>
+</header>
+
+<section id="message" class="message-section">
+  <div class="message-intro--c">
+    <img src="../assets/img/代表写真.jpg" alt="代表取締役 山下克則">
+    <div class="scrim"></div>
+    <div class="message-heading--c">
+      <div class="eyebrow eyebrow--light">03 &mdash; MESSAGE</div>
+      <h2 class="section-title section-title--light">代表メッセージ</h2>
+      <div class="message-kicker">message</div>
+    </div>
+  </div>
+
+  <div class="wrap message-body">
+    <h3 class="message-quote-title">業界の&quot;当たり前&quot;を変える。</h3>
+    <div class="message-text">
+      <p>私たちUSBOARDグループが目指しているのは、会社を大きくすることだけではありません。<br>本当に実現したいのは、「業界のスタンダード」を変えることです。</p>
+      <blockquote>コピーされることは、競争に負けることではありません。</blockquote>
+      <div class="message-sign">
+        <span class="message-sign-label">代表取締役</span>
+        <img class="message-sign-img" src="../assets/img/signature-cropped.png" alt="山下克則 署名">
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
