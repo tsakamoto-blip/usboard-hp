@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>代表写真デザイン案(ローカル確認用)</title>
+<style>
+  body { font-family: -apple-system, 'Zen Kaku Gothic New', sans-serif; background:#f7f7f5; margin:0; padding:60px 24px; color:#111214; }
+  h1 { font-size:24px; margin-bottom:8px; }
+  p.lead { color:#6c6f76; margin-bottom:40px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:24px; max-width:1000px; }
+  a.card { display:block; background:#fff; border:1px solid rgba(17,18,20,0.1); border-radius:8px; padding:28px; text-decoration:none; color:inherit; transition: box-shadow .2s, transform .2s; }
+  a.card:hover { box-shadow: 0 12px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  a.card .label { font-size:11px; letter-spacing:.1em; color:#9a9ca1; margin-bottom:10px; }
+  a.card h2 { font-size:20px; margin:0 0 10px; }
+  a.card .desc { font-size:13px; line-height:1.8; color:#4a4d54; }
+</style>
+</head>
+<body>
+  <h1>代表写真デザイン案(ローカル確認用)</h1>
+  <p class="lead">GitHubにはまだ公開していません。ここだけで見比べられます。</p>
+  <div class="grid">
+    <a class="card" href="full-bw.html">
+      <div class="label">フルページ版</div>
+      <h2>今のデザイン + 白黒写真</h2>
+      <div class="desc">現在公開中のデザインをそのまま使い、代表写真だけを白黒(代表写真.jpg)に差し替えたものです。全セクション、実際のページと同じ構成で確認できます。</div>
+    </a>
+    <a class="card" href="full-hover-crossfade.html">
+      <div class="label">フルページ版</div>
+      <h2>今のデザイン + ホバークロスフェード(白黒)</h2>
+      <div class="desc">現在公開中のデザインをそのまま使い、代表写真(白黒)にマウスを乗せている間だけカジュアルな「ポップ」写真(白黒)にクロスフェードするようにしたものです。離すと元の写真に戻ります。</div>
+    </a>
+    <a class="card" href="full-color-whitebg.html">
+      <div class="label">フルページ版</div>
+      <h2>カラー写真 + 背景白</h2>
+      <div class="desc">代表メッセージのセクションの背景をダークからサイト全体と同じ明るい背景色に変更し、代表写真もカラーのまま使ったバージョンです。各種リンクは白背景にしてメリハリをつけています。</div>
+    </a>
+    <a class="card" href="full-color-whitebg-hover.html">
+      <div class="label">フルページ版</div>
+      <h2>カラー写真 + 背景白 + ホバー切替</h2>
+      <div class="desc">上の「カラー写真 + 背景白」に、代表写真のホバークロスフェード(通常⇄ポップ写真)を組み合わせたバージョンです。</div>
+    </a>
+    <a class="card" href="full-color-whitebg-companybg.html">
+      <div class="label">フルページ版</div>
+      <h2>会社概要を写真背景に(背景白パターン)</h2>
+      <div class="desc">「カラー写真 + 背景白」をベースに、会社概要セクションだけ拠点写真(_E8A9839.jpg)をボックスではなくセクション全体の背景にしたバージョンです。左側は白いグラデーションで文字を読みやすくしています。</div>
+    </a>
+    <a class="card" href="full-pdfstyle.html">
+      <div class="label">フルページ版</div>
+      <h2>sample.pdf 参考デザイン</h2>
+      <div class="desc">「カラー写真 + 背景白」をベースに、sample.pdfを再現したバージョンです。並び順を USBOARDについて→代表メッセージ→各種リンク→会社概要 に変更、ヒーロー画像をグレースケールに。代表メッセージは背景をダークに戻し、写真に白いカードを重ねる見出し、引用文の横にポップ写真を並べる構成にしています。会社概要は写真フルブリード背景 + 白いカードです。</div>
+    </a>
+  </div>
+</body>
+</html>
