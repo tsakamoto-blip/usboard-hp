@@ -1,29 +1,45 @@
-(() => {
-  const AUTO_ADVANCE_MS = 6000;
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.hero-dot');
-  if (!slides.length) return;
-
-  let current = 0;
-  let timer = null;
-
-  function show(index) {
-    current = index;
-    slides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
-    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
+(function () {
+  // Hero slideshow
+  var slides = [].slice.call(document.querySelectorAll('.hero-slide'));
+  var dots = [].slice.call(document.querySelectorAll('.hero-dots button'));
+  var i = 0, timer = null;
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+    dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
   }
-
-  function restartTimer() {
+  function start() {
     if (timer) clearInterval(timer);
-    timer = setInterval(() => show((current + 1) % slides.length), AUTO_ADVANCE_MS);
+    timer = setInterval(function () { show(i + 1); }, 6000);
+  }
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () { show(+d.dataset.i); start(); });
+  });
+  if (slides.length) start();
+
+  // Group rows reveal on scroll
+  var rows = [].slice.call(document.querySelectorAll('.brand'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
+    rows.forEach(function (r) { io.observe(r); });
+  } else {
+    rows.forEach(function (r) { r.classList.add('in'); });
   }
 
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      show(Number(dot.dataset.goto));
-      restartTimer();
-    });
-  });
-
-  restartTimer();
+  // Message portrait swaps on hover
+  var mphoto = document.querySelector('.msg-hero .msg-photo');
+  if (mphoto) {
+    var ms = [].slice.call(mphoto.querySelectorAll('.ph'));
+    var mi = 0;
+    function mshow(n) {
+      mi = (n + ms.length) % ms.length;
+      ms.forEach(function (s, k) { s.classList.toggle('on', k === mi); });
+    }
+    mshow(0);
+    mphoto.addEventListener('mouseenter', function () { mshow(mi + 1); });
+  }
 })();
