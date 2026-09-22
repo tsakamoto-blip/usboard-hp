@@ -16,7 +16,10 @@ img{display:block;}
 .wrap{max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,64px);}
 .eyebrow{font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:.3em;color:#9a9ca1;margin-bottom:14px;}
 .sec-h2{margin:0;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:clamp(28px,3.4vw,44px);line-height:1.24;letter-spacing:.01em;}
-.rule{width:56px;height:3px;background:var(--spectrum-3);border-radius:2px;}
+.rule{width:60px;height:5px;background:var(--spectrum-3);border-radius:3px;}
+/* Paint the accent bar in from the left when it scrolls into view. */
+.js .rule{background-size:0% 100%;background-repeat:no-repeat;}
+.rule.in{background-size:100% 100%;transition:background-size .9s cubic-bezier(.22,1,.3,1);}
 
 /* Header */
 header{position:sticky;top:0;z-index:50;background:rgba(241,240,234,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(17,18,20,.07);}
@@ -92,8 +95,18 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
 .msg-titlecard .sub{font-family:'Barlow Condensed',sans-serif;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#9aa0a6;font-size:15px;margin-top:12px;}
 .msg-band{max-width:1480px;margin:0 auto;padding:clamp(56px,7vw,104px) clamp(20px,4vw,52px);display:grid;grid-template-columns:0.92fr 1.08fr;gap:clamp(30px,4vw,68px);align-items:center;}
 .msg-photostack{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.2vw,34px);}
-.msg-photostack img{display:block;width:74%;height:auto;border-radius:6px;box-shadow:0 26px 64px -32px rgba(0,0,0,.75);}
-.msg-photostack img.b{align-self:flex-end;}
+/* JS wraps each photo in a .snap so it can flutter down and get "pinned". */
+.msg-photostack .snap{position:relative;display:block;width:74%;}
+.msg-photostack .snap.b{align-self:flex-end;}
+.msg-photostack img,.msg-photostack .snap img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 26px 64px -32px rgba(0,0,0,.75);}
+.msg-photostack>img{width:74%;}
+.msg-photostack>img.b{align-self:flex-end;}
+/* pushpin */
+.msg-photostack .snap::before{content:"";position:absolute;top:-9px;left:50%;width:15px;height:15px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#ff9a9a,#d8322f 62%,#9e1c1a);
+  box-shadow:0 3px 6px rgba(0,0,0,.45),inset 0 1px 1px rgba(255,255,255,.5);
+  transform:translateX(-50%) scale(0);z-index:4;}
+.msg-photostack.in .snap::before{transform:translateX(-50%) scale(1);transition:transform .35s cubic-bezier(.3,1.5,.4,1);}
 .msg-lead{display:flex;gap:20px;align-items:flex-start;margin:0 0 clamp(28px,3vw,44px);}
 .msg-lead span{flex:0 0 auto;width:5px;align-self:stretch;min-height:1.2em;background:linear-gradient(180deg,var(--c1),var(--c2) 45%,var(--c3));border-radius:3px;}
 .msg-lead h3{margin:0;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:clamp(28px,4.2vw,50px);line-height:1.28;letter-spacing:.02em;}
@@ -125,8 +138,16 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
   position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr) minmax(0,1fr);
   align-items:center;height:clamp(184px,17vw,224px);overflow:hidden;
   border-bottom:1px solid rgba(17,18,20,.08);
-  opacity:0;transform:translateY(18px);transition:opacity 800ms cubic-bezier(.16,1,.3,1),transform 800ms cubic-bezier(.16,1,.3,1);}
+  transition:opacity 800ms cubic-bezier(.16,1,.3,1),transform 800ms cubic-bezier(.16,1,.3,1);}
 .brand:first-of-type{border-top:1px solid rgba(17,18,20,.08);}
+/* Rows slide in from their own side (left, right, left, right), cascading
+   top-to-bottom the first time they scroll into view, then stay put. */
+.js .brand{opacity:0;}
+.js .brand.from-left{transform:translateX(-64px);}
+.js .brand.from-right{transform:translateX(64px);}
+.js .brand:nth-of-type(2){transition-delay:.12s;}
+.js .brand:nth-of-type(3){transition-delay:.24s;}
+.js .brand:nth-of-type(4){transition-delay:.36s;}
 .brand.in{opacity:1;transform:none;}
 /* Faint brand-colour wash over the whole card on hover. */
 .brand::before{content:"";position:absolute;inset:0;background:var(--ac);opacity:0;pointer-events:none;z-index:2;transition:opacity .3s ease;}
@@ -142,7 +163,7 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
   padding:20px 0;text-align:left;position:relative;z-index:3;
   width:fit-content;max-width:clamp(300px,32vw,460px);margin-inline:auto;}
 .lc-verb{display:inline-flex;align-items:center;gap:14px;}
-.lc-verb span:first-child{width:26px;height:2px;background:var(--ac,#f2a33c);}
+.lc-verb span:first-child{width:28px;height:3px;border-radius:2px;background:var(--ac,#f2a33c);}
 .lc-verb span:last-child{font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:clamp(20px,2.2vw,28px);letter-spacing:.04em;color:#16202b;transition:color .22s ease;}
 .brand-text p{margin:0;max-width:40ch;font-size:13px;line-height:1.9;letter-spacing:.03em;color:#3f434a;transition:color .22s ease;}
 .lc-links{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin-top:10px;}
@@ -195,6 +216,69 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
 .foot nav{display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
 .foot nav a{font-size:13px;letter-spacing:.06em;color:rgba(244,244,242,.72);}
 
+/* ===== Entrance animations ===== */
+
+/* ABOUT — the whole white card is a sheet of paper that flutters down. */
+@keyframes paperCard{
+  0%{opacity:0;transform:translateY(-22px) rotate(-.5deg);}
+  70%{opacity:1;transform:translateY(2px) rotate(.06deg);}
+  100%{opacity:1;transform:translateY(0) rotate(0);}
+}
+.js .philosophy{opacity:0;}
+.philosophy.in{animation:paperCard 1.5s cubic-bezier(.2,.7,.2,1) both;}
+
+/* Last line — drops in one character at a time when scrolled to. */
+.js .dropchars{opacity:1;}
+.dropchars .ch{display:inline-block;white-space:pre;opacity:0;transform:translateY(-10px);}
+.dropchars.in .ch{animation:charDrop .5s cubic-bezier(.2,.7,.2,1) forwards;}
+@keyframes charDrop{to{opacity:1;transform:translateY(0);}}
+
+/* MESSAGE photos — flutter down and get pinned. */
+@keyframes flutterPin{
+  0%{opacity:0;transform:translateY(-72px) rotate(-7deg);}
+  55%{opacity:1;transform:translateY(10px) rotate(3.5deg);}
+  78%{transform:translateY(-3px) rotate(-1.6deg);}
+  100%{opacity:1;transform:translateY(0) rotate(var(--rf,-1.5deg));}
+}
+.js .msg-photostack .snap{opacity:0;}
+.msg-photostack.in .snap{animation:flutterPin .95s cubic-bezier(.22,1,.3,1) both;}
+.msg-photostack.in .snap:nth-child(1){--rf:-2deg;animation-delay:.05s;}
+.msg-photostack.in .snap:nth-child(2){--rf:1.6deg;animation-delay:.24s;}
+.msg-photostack.in .snap:nth-child(3){--rf:-1deg;animation-delay:.43s;}
+.msg-photostack.in .snap:nth-child(1)::before{transition-delay:.55s;}
+.msg-photostack.in .snap:nth-child(2)::before{transition-delay:.74s;}
+.msg-photostack.in .snap:nth-child(3)::before{transition-delay:.93s;}
+
+/* MESSAGE headlines — romaji typed, then "converted" segment by segment (IME
+   style). Only the romaji currently being composed carries the dotted underline
+   and caret; already-converted text is plain. */
+.typeconv{white-space:normal;}
+.typeconv .compose{text-decoration:underline;text-decoration-style:dotted;text-decoration-thickness:2px;text-underline-offset:6px;}
+/* Photos hold back until their headline has finished typing, so they drop into
+   a settled layout instead of being shoved around while the romaji wraps. */
+.js .msg-hero .msg-photo{opacity:0;transition:opacity .7s ease;}
+.msg-hero .msg-photo.shown{opacity:1;}
+.typeconv .compose::after{content:"";display:inline-block;width:2px;height:1.02em;margin-left:.08em;vertical-align:-.14em;background:currentColor;animation:caretBlink 1s steps(1) infinite;}
+@keyframes caretBlink{50%{opacity:0;}}
+.typeconv .compose.converting{background:rgba(255,255,255,.18);border-radius:4px;box-shadow:0 0 0 .16em rgba(255,255,255,.18);}
+
+/* COMPANY card — a gentle rise as it scrolls in. */
+.js .co-card{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.22,1,.3,1),transform .8s cubic-bezier(.22,1,.3,1);}
+.co-card.in{opacity:1;transform:none;}
+
+@media (prefers-reduced-motion:reduce){
+  .js .rule{background-size:100% 100%!important;}
+  .js .philosophy{opacity:1!important;animation:none!important;}
+  .dropchars .ch{opacity:1!important;transform:none!important;animation:none!important;}
+  .js .msg-photostack .snap{opacity:1!important;animation:none!important;}
+  .msg-photostack .snap::before{transform:translateX(-50%) scale(1)!important;}
+  .js .msg-hero .msg-photo{opacity:1!important;}
+  .js .co-card{opacity:1!important;transform:none!important;}
+  .js .brand{opacity:1!important;transform:none!important;}
+  .typeconv .compose{text-decoration:none!important;}
+  .typeconv .compose::after{display:none!important;}
+}
+
 @media (max-width:860px){
   .links-head p{white-space:normal;}
   .about-grid{grid-template-columns:1fr;}
@@ -205,8 +289,8 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   .msg-split{grid-template-columns:1fr;}
   .msg-band{grid-template-columns:1fr;gap:32px;}
   .msg-photostack{flex-direction:row;flex-wrap:wrap;}
-  .msg-photostack img{width:46%;}
-  .msg-photostack img.b{align-self:auto;}
+  .msg-photostack .snap,.msg-photostack>img{width:46%;}
+  .msg-photostack .snap.b,.msg-photostack>img.b{align-self:auto;}
   .msg-split .msg-photo{order:-1;}
   .brand,.brand.from-left,.brand.from-right{grid-template-columns:1fr;height:auto;min-height:0;}
   /* photo returns to normal flow (stacked) on mobile */
