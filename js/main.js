@@ -54,6 +54,12 @@
 
   // ---- Last line: drop one character at a time, then draw the underline ----
   var dc = document.querySelector('.philosophy .body p.dropchars');
+  // Gate the msg-hero headline: it may not start typing until this line's
+  // animation has finished, or the line has scrolled fully out of view.
+  var gateOpen = reduce || !hasIO || !dc;
+  var gateWaiters = [];
+  function openGate() { if (gateOpen) return; gateOpen = true; gateWaiters.forEach(function (f) { f(); }); gateWaiters = []; }
+  function onGate(fn) { if (gateOpen) fn(); else gateWaiters.push(fn); }
   if (dc && !reduce) {
     var txt = dc.textContent;
     dc.textContent = '';
@@ -71,10 +77,17 @@
           if (!en.isIntersecting) return;
           dio.unobserve(dc);
           dc.classList.add('in');
-          setTimeout(function () { dc.classList.add('line-in'); }, lineDelay);
+          setTimeout(function () { dc.classList.add('line-in'); setTimeout(openGate, 850); }, lineDelay);
         });
       }, { threshold: 0.6 });
       dio.observe(dc);
+      // Open the gate early once the line is scrolled fully above the viewport.
+      var offIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting && en.boundingClientRect.bottom <= 0) { openGate(); offIO.disconnect(); }
+        });
+      }, { threshold: 0 });
+      offIO.observe(dc);
     } else {
       dc.classList.add('in', 'line-in');
     }
@@ -114,7 +127,7 @@
         if (n <= seg.r.length) {
           el.innerHTML = committed + '<span class="compose">' + esc(seg.r.slice(0, n)) + '</span>';
           n++;
-          setTimeout(step, 45 + Math.random() * 45);
+          setTimeout(step, 35 + Math.random() * 35);
         } else {
           setTimeout(function () {
             el.innerHTML = committed + '<span class="compose converting">' + esc(seg.r) + '</span>';
@@ -142,16 +155,23 @@
       var b = part.split('::');
       return { r: b[0], f: b[1] || '', br: b[2] === 'br' };
     }) : [];
-    // What this headline releases once it finishes typing.
-    var onDone = null;
-    if (el.closest('.msg-hero')) { onDone = function () { if (heroPhoto) heroPhoto.classList.add('shown'); }; }
-    else if (el.closest('.msg-band')) { onDone = function () { if (stack) stack.classList.add('in'); }; }
+    // onStart: neighbouring photos appear as the title starts typing.
+    // onDone: the body copy appears once the title has finished.
+    var wrap = el.closest('.msg-hero-text') || el.closest('.msg-bandtext');
+    var copy = wrap ? wrap.querySelector('.msg-copy') : null;
+    var onStart = null, onDone = function () { if (copy) copy.classList.add('copy-in'); };
+    if (el.closest('.msg-band')) { onStart = function () { if (stack) stack.classList.add('in'); }; }
     if (reduce || !hasIO || !segs.length) { if (onDone) onDone(); return; } // leave the final text as-is
     el.innerHTML = '<span class="compose"></span>';
+    var gated = !!el.closest('.msg-hero'); // the first headline waits on the gate
     var done = false;
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting && !done) { done = true; io.unobserve(el); typeConvert(el, segs, onDone); }
+        if (en.isIntersecting && !done) {
+          done = true; io.unobserve(el);
+          var begin = function () { if (onStart) onStart(); typeConvert(el, segs, onDone); };
+          if (gated) onGate(begin); else begin();
+        }
       });
     }, { threshold: 0.6 });
     io.observe(el);

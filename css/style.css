@@ -252,6 +252,9 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
 .typeconv .compose::after{content:"";display:inline-block;width:2px;height:1.02em;margin-left:.08em;vertical-align:-.14em;background:currentColor;animation:caretBlink 1s steps(1) infinite;}
 @keyframes caretBlink{50%{opacity:0;}}
 .typeconv .compose.converting{background:rgba(255,255,255,.18);border-radius:4px;box-shadow:0 0 0 .16em rgba(255,255,255,.18);}
+/* The body copy under each headline appears only after the title is typed. */
+.js .msg-hero-text .msg-copy,.js .msg-bandtext .msg-copy{opacity:0;transform:translateY(8px);transition:opacity .8s ease,transform .8s ease;}
+.js .msg-hero-text .msg-copy.copy-in,.js .msg-bandtext .msg-copy.copy-in{opacity:1;transform:none;}
 
 /* COMPANY card — a gentle rise as it scrolls in. */
 .js .co-card{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.22,1,.3,1),transform .8s cubic-bezier(.22,1,.3,1);}
@@ -263,6 +266,7 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   .dropchars .ch{opacity:1!important;transform:none!important;animation:none!important;}
   .js .dropchars::after{transform:none!important;}
   .js .msg-photostack .snap{opacity:1!important;animation:none!important;}
+  .js .msg-hero-text .msg-copy,.js .msg-bandtext .msg-copy{opacity:1!important;transform:none!important;}
   .js .co-card{opacity:1!important;transform:none!important;}
   .js .brand{opacity:1!important;transform:none!important;}
   .typeconv .compose{text-decoration:none!important;}
