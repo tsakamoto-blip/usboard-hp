@@ -52,7 +52,7 @@
   // ---- ABOUT philosophy: paper flutter ----
   reveal(document.querySelectorAll('.philosophy'), { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
 
-  // ---- Last line: drop one character at a time ----
+  // ---- Last line: drop one character at a time, then draw the underline ----
   var dc = document.querySelector('.philosophy .body p.dropchars');
   if (dc && !reduce) {
     var txt = dc.textContent;
@@ -64,7 +64,20 @@
       sp.style.animationDelay = (c * 0.06).toFixed(2) + 's';
       dc.appendChild(sp);
     }
-    reveal([dc], { threshold: 0.6 });
+    var lineDelay = (txt.length - 1) * 60 + 500 + 120; // after the last char lands
+    if (hasIO) {
+      var dio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          dio.unobserve(dc);
+          dc.classList.add('in');
+          setTimeout(function () { dc.classList.add('line-in'); }, lineDelay);
+        });
+      }, { threshold: 0.6 });
+      dio.observe(dc);
+    } else {
+      dc.classList.add('in', 'line-in');
+    }
   }
 
   // ---- Brand rows: slide in from their side (L/R/L/R), once only ----
