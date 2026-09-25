@@ -20,6 +20,9 @@ img{display:block;}
 /* Paint the accent bar in from the left when it scrolls into view. */
 .js .rule{background-size:0% 100%;background-repeat:no-repeat;}
 .rule.in{background-size:100% 100%;transition:background-size .9s cubic-bezier(.22,1,.3,1);}
+/* ABOUT eyebrow: the accent bar sits to the LEFT of "01 — ABOUT". */
+.ab-eyebrow{display:flex;align-items:center;gap:14px;}
+.ab-eyebrow .rule{flex:none;width:44px;height:4px;}
 
 /* Header */
 header{position:sticky;top:0;z-index:50;background:rgba(241,240,234,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(17,18,20,.07);}
@@ -57,7 +60,7 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
   box-shadow:0 1px 2px rgba(17,18,20,.04),0 18px 40px -24px rgba(17,18,20,.22),0 60px 120px -60px rgba(17,18,20,.30);}
 .philosophy::before{content:"";position:absolute;left:0;top:0;height:3px;width:clamp(64px,20%,120px);background:var(--spectrum-3);border-radius:0 0 3px 0;}
 .philosophy .lede{position:relative;display:flex;align-items:center;gap:16px;width:fit-content;max-width:100%;margin:0 auto 44px;font-size:clamp(24px,2.9vw,36px);font-weight:800;line-height:1.42;letter-spacing:.02em;color:#16181c;text-align:left;text-wrap:pretty;}
-.philosophy .lede::before{content:"";flex:none;width:6px;height:1.1em;border-radius:3px;background:var(--spectrum-3);}
+.philosophy .lede::before{content:"";flex:none;width:6px;height:1.1em;border-radius:3px;background:linear-gradient(180deg,var(--c1),var(--c2) 45%,var(--c3));}
 .philosophy .body{display:flex;flex-direction:column;align-items:center;}
 .philosophy .body p{margin:0 0 clamp(20px,2.4vw,30px);font-size:clamp(15px,1.15vw,17px);line-height:1.85;letter-spacing:.03em;color:var(--ink-soft);text-align:center;text-wrap:pretty;}
 .philosophy .body p:last-child{align-self:center;margin-top:clamp(14px,2vw,22px);margin-bottom:0;font-size:clamp(24px,2.9vw,36px);font-weight:800;line-height:1.42;letter-spacing:.02em;color:#16181c;display:inline-block;position:relative;padding-bottom:18px;}
