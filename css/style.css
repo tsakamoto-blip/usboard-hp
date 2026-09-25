@@ -162,10 +162,10 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
 .lc-verb span:first-child{width:28px;height:3px;border-radius:2px;background:var(--ac,#f2a33c);}
 .lc-verb span:last-child{font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:clamp(20px,2.2vw,28px);letter-spacing:.04em;color:#16202b;transition:color .22s ease;}
 .brand-text p{margin:0;max-width:40ch;font-size:13px;line-height:1.9;letter-spacing:.03em;color:#3f434a;transition:color .22s ease;}
-.lc-links{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin-top:10px;}
+.lc-links{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:12px;}
 /* Stacked, extra-bold and tinted a deep shade of the brand colour so each
    line reads clearly as a link; brightens to the full colour on hover. */
-.lc-links a{font-family:'Barlow',sans-serif;font-weight:800;font-size:12.5px;letter-spacing:.13em;
+.lc-links a{font-family:'Barlow',sans-serif;font-weight:800;font-size:15px;letter-spacing:.12em;
   color:color-mix(in srgb,var(--ac) 82%,#151515);white-space:nowrap;transition:color .2s ease;}
 .lc-links a:hover{color:var(--ac,#7b45f0);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px;}
 /* Hover anywhere on a company's row tints its copy with that brand's colour. */
@@ -275,9 +275,13 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
 
 @media (max-width:860px){
   .links-head p{white-space:normal;}
+  /* Let body copy flow naturally on small screens instead of breaking at the
+     desktop-designed <br> points (which orphan words on a phone). */
+  .philosophy .body p br,.msg-copy br,.brand-text p br,.links-head p br{display:none;}
   .about-grid{grid-template-columns:1fr;}
   .philosophy{margin-bottom:clamp(-160px,-24vw,-80px);}
   .msg-hero{grid-template-columns:1fr;}
+  .msg-hero-text,.msg-hero .msg-photo{grid-column:auto;}
   .msg-hero .msg-photo{order:-1;width:100%;max-width:560px;margin:0 auto;}
   .msg-hero-text .msg-copy{white-space:normal;}
   .msg-split{grid-template-columns:1fr;}
@@ -304,4 +308,35 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   *{scroll-behavior:auto;}
   .hero-slide,.brand{transition:none;}
   .brand{opacity:1;transform:none;}
+}
+
+/* ===== Phones ===== */
+@media (max-width:560px){
+  /* Header: logo centered over a centered, wrapping nav */
+  .hbar{flex-direction:column;gap:9px;min-height:0;}
+  header nav{width:100%;justify-content:center;gap:7px 14px;}
+  header nav a{font-size:13px;letter-spacing:.04em;}
+
+  /* Hero: smaller so the two headline lines clear the edges */
+  #top{min-height:460px;}
+  .hero-h1{font-size:clamp(27px,7.4vw,86px);}
+  .hero-kicker{margin-bottom:12px;}
+
+  /* About: trim the card's side padding so the copy isn't pinched */
+  #about{padding-top:clamp(56px,14vw,150px);}
+  .philosophy{padding:clamp(30px,7vw,44px) clamp(18px,5vw,26px) clamp(34px,7vw,48px);}
+  .philosophy .lede{gap:12px;font-size:clamp(22px,6vw,36px);}
+  .philosophy .body p:last-child{font-size:clamp(22px,6vw,36px);}
+
+  /* Message: keep the three photos as one tidy, centered strip */
+  .msg-photostack{justify-content:center;gap:12px;}
+  .msg-photostack .snap,.msg-photostack>img{width:31%;}
+  .msg-hero-text .msg-lead h3,.msg-split h3{font-size:clamp(21px,5.6vw,38px);}
+
+  /* Links: comfortable stacked cards */
+  .brand-photo,.brand.from-left .brand-photo,.brand.from-right .brand-photo{min-height:172px;}
+  .lc-links a{font-size:14px;}
+
+  /* Company: a little tighter */
+  #company .wrap{padding-top:clamp(90px,20vw,190px);}
 }
