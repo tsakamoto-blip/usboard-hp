@@ -165,12 +165,27 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
 .lc-verb span:first-child{width:28px;height:3px;border-radius:2px;background:var(--ac,#f2a33c);}
 .lc-verb span:last-child{font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:clamp(20px,2.2vw,28px);letter-spacing:.04em;color:#16202b;transition:color .22s ease;}
 .brand-text p{margin:0;max-width:40ch;font-size:13px;line-height:1.9;letter-spacing:.03em;color:#3f434a;transition:color .22s ease;}
-.lc-links{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:12px;}
+.lc-links{display:flex;flex-direction:column;align-items:flex-start;gap:24px;margin-top:14px;}
 /* Stacked, extra-bold and tinted a deep shade of the brand colour so each
    line reads clearly as a link; brightens to the full colour on hover. */
-.lc-links a{font-family:'Barlow',sans-serif;font-weight:800;font-size:15px;letter-spacing:.12em;
+.lc-links a{position:relative;display:inline-flex;align-items:center;gap:.4em;line-height:1;
+  font-family:'Barlow',sans-serif;font-weight:800;font-size:15px;letter-spacing:.12em;
   color:color-mix(in srgb,var(--ac) 82%,#151515);white-space:nowrap;transition:color .2s ease;}
-.lc-links a:hover{color:var(--ac,#7b45f0);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px;}
+.lc-links a:hover{color:var(--ac,#7b45f0);}
+/* A rectangle is drawn around each link by a single travelling line when the
+   row scrolls into view: top → right → bottom → left. */
+.lc-links a::before,.lc-links a::after{content:"";position:absolute;box-sizing:border-box;width:0;height:0;pointer-events:none;}
+.lc-links a::before{top:-7px;left:-12px;border-top:2px solid var(--ac);border-right:2px solid var(--ac);}
+.lc-links a::after{bottom:-7px;right:-12px;border-bottom:2px solid var(--ac);border-left:2px solid var(--ac);}
+.brand.in .lc-links a::before{width:calc(100% + 24px);height:calc(100% + 14px);transition:width .26s linear .25s,height .26s linear .51s;}
+.brand.in .lc-links a::after{width:calc(100% + 24px);height:calc(100% + 14px);transition:width .26s linear .77s,height .26s linear 1.03s;}
+/* English label "translates" to Japanese on hover (cross-fade). */
+.lc-label{position:relative;display:inline-block;}
+.lc-en{display:inline-block;transition:opacity .22s ease;}
+.lc-ja{position:absolute;left:0;top:0;white-space:nowrap;opacity:0;transition:opacity .22s ease;
+  font-family:'Zen Kaku Gothic New','Noto Sans JP',sans-serif;font-weight:800;letter-spacing:.04em;}
+.lc-links a:hover .lc-en{opacity:0;}
+.lc-links a:hover .lc-ja{opacity:1;}
 /* Hover anywhere on a company's row tints its copy with that brand's colour. */
 .brand:hover .lc-verb span:last-child,
 .brand:hover .lc-links a{color:var(--ac);}
@@ -272,6 +287,7 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   .js .msg-hero-text .msg-copy,.js .msg-bandtext .msg-copy{opacity:1!important;transform:none!important;}
   .js .co-card{opacity:1!important;transform:none!important;}
   .js .brand{opacity:1!important;transform:none!important;}
+  .brand.in .lc-links a::before,.brand.in .lc-links a::after{transition:none!important;}
   .typeconv .compose{text-decoration:none!important;}
   .typeconv .compose::after{display:none!important;}
 }
