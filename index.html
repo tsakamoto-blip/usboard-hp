@@ -28,9 +28,9 @@
 
 <section id="top">
   <div class="hero-slides">
-    <div class="hero-slide on"><img src="assets/img/_E8A9615.jpg" alt="USBOARDグループ 集合写真"></div>
-    <div class="hero-slide"><img src="assets/img/hero-事業車両-新.jpg" alt="USBOARDグループ 事業・車両の写真"></div>
-    <div class="hero-slide"><img src="assets/img/hero-拠点ヤード-新.jpg" alt="USBOARDグループ 拠点・ヤードの写真"></div>
+    <div class="hero-slide on"><picture><source media="(max-width:560px)" srcset="assets/img/スマホ用ヒーロー1-opt.jpg"><img src="assets/img/_E8A9615.jpg" alt="USBOARDグループ 集合写真"></picture></div>
+    <div class="hero-slide"><picture><source media="(max-width:560px)" srcset="assets/img/スマホ用ヒーロー2-opt.jpg"><img src="assets/img/hero-事業車両-新.jpg" alt="USBOARDグループ 事業・車両の写真"></picture></div>
+    <div class="hero-slide"><picture><source media="(max-width:560px)" srcset="assets/img/スマホ用ヒーロー4-opt.jpg"><img src="assets/img/hero-拠点ヤード-新.jpg" alt="USBOARDグループ 拠点・ヤードの写真"></picture></div>
   </div>
   <div class="hero-veil"></div>
   <div class="hero-inner"><div class="wrap">
@@ -130,7 +130,7 @@
           <a href="https://www.globaline.co.jp/recruit/" target="_blank" rel="noopener"><span class="lc-label"><span class="lc-en">RECRUIT SITE</span><span class="lc-ja">採用サイトへ</span></span> &rarr;</a>
         </div>
       </div>
-      <div class="brand-photo"><img class="brand-img" src="assets/img/GL紹介-crop.jpg" alt="GLOBALINE イメージ写真" loading="lazy"></div>
+      <div class="brand-photo"><img class="brand-img" src="assets/img/グローバライン-crop.jpg" alt="GLOBALINE イメージ写真" loading="lazy"></div>
     </article>
 
     <article class="brand from-right" style="--ac:#2e9bd6;">
@@ -206,5 +206,15 @@
 </footer>
 
 <script src="js/main.js"></script>
+<!-- BudouX: phrase-based Japanese line-breaking (cross-browser, incl. Safari).
+     Applied to static Japanese copy only — animated headlines/last line excluded. -->
+<script type="module">
+  import { loadDefaultJapaneseParser } from 'https://cdn.jsdelivr.net/npm/budoux/+esm';
+  const parser = loadDefaultJapaneseParser();
+  const sel = '.philosophy .lede, .philosophy .body p:not(.dropchars), .msg-copy p, .brand-text p, .links-head p, .co-card dd';
+  const apply = () => document.querySelectorAll(sel).forEach(el => { try { parser.applyToElement(el); } catch (e) {} });
+  if (document.readyState === 'complete') apply();
+  else window.addEventListener('load', apply);
+</script>
 </body>
 </html>

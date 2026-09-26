@@ -36,6 +36,7 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
 .hero-slides{position:absolute;inset:0;}
 .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1100ms cubic-bezier(.4,0,.2,1);}
 .hero-slide.on{opacity:1;}
+.hero-slide picture{display:block;width:100%;height:100%;}
 .hero-slide img{width:100%;height:100%;object-fit:cover;}
 .hero-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,11,13,.42) 0%,rgba(10,11,13,.06) 38%,rgba(10,11,13,.66) 100%);}
 .hero-inner{position:absolute;inset:0;pointer-events:none;display:flex;align-items:flex-end;}
@@ -359,3 +360,10 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   /* Company: a little tighter */
   #company .wrap{padding-top:clamp(90px,20vw,190px);}
 }
+
+/* ===== BudouX / Japanese typography ===== */
+:lang(ja){font-feature-settings:"palt";}
+/* Balance line lengths on static headings and the lede (not the animated ones). */
+.about-head h2,.sec-h2,.mh-title,.philosophy .lede,.philosophy .body p:last-child{text-wrap:balance;}
+/* BudouX sets keep-all + ZWSP on the elements below; keep kinsoku tidy. */
+.philosophy .lede,.philosophy .body p,.msg-copy p,.brand-text p,.links-head p,.co-card dd{line-break:strict;}
