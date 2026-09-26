@@ -61,16 +61,24 @@
   function openGate() { if (gateOpen) return; gateOpen = true; gateWaiters.forEach(function (f) { f(); }); gateWaiters = []; }
   function onGate(fn) { if (gateOpen) fn(); else gateWaiters.push(fn); }
   if (dc && !reduce) {
-    var txt = dc.textContent;
-    dc.textContent = '';
-    for (var c = 0; c < txt.length; c++) {
-      var sp = document.createElement('span');
-      sp.className = 'ch';
-      sp.textContent = txt.charAt(c);
-      sp.style.animationDelay = (c * 0.06).toFixed(2) + 's';
-      dc.appendChild(sp);
-    }
-    var lineDelay = (txt.length - 1) * 60 + 500 + 120; // after the last char lands
+    var ci = 0;
+    // Split characters inside each phrase span (.ln) so the mobile line break
+    // between them is preserved; fall back to the whole element otherwise.
+    var lns = [].slice.call(dc.querySelectorAll('.ln'));
+    var targets = lns.length ? lns : [dc];
+    targets.forEach(function (el2) {
+      var t = el2.textContent;
+      el2.textContent = '';
+      for (var k = 0; k < t.length; k++) {
+        var sp = document.createElement('span');
+        sp.className = 'ch';
+        sp.textContent = t.charAt(k);
+        sp.style.animationDelay = (ci * 0.06).toFixed(2) + 's';
+        ci++;
+        el2.appendChild(sp);
+      }
+    });
+    var lineDelay = (ci - 1) * 60 + 500 + 120; // after the last char lands
     if (hasIO) {
       var dio = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
