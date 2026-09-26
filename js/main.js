@@ -99,20 +99,42 @@
   // ---- Company card: gentle rise ----
   reveal(document.querySelectorAll('.co-card'), { threshold: 0.25 });
 
-  // ---- Message photostack: flutter down + pin ----
-  // Wrapped here, but revealed only once its headline finishes typing (below),
-  // so the photos settle onto a stable layout.
-  var stack = document.querySelector('.msg-photostack');
-  if (stack) {
-    [].slice.call(stack.children).forEach(function (node) {
-      if (node.tagName !== 'IMG') return;
-      var snap = document.createElement('span');
-      snap.className = 'snap' + (node.className ? ' ' + node.className : '');
-      node.className = '';
-      stack.insertBefore(snap, node);
-      snap.appendChild(node);
+  // ---- Message photo carousel: auto-advancing, snap scroll, dots ----
+  (function initCarousel() {
+    var car = document.querySelector('.msg-carousel');
+    if (!car) return;
+    var track = car.querySelector('.mc-track');
+    var dotsWrap = car.querySelector('.mc-dots');
+    var cslides = [].slice.call(track.querySelectorAll('.mc-slide'));
+    if (cslides.length < 2) return;
+    var cur = 0, ctimer = null, paused = false, sst = null;
+    var cdots = cslides.map(function (_, k) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'スライド ' + (k + 1));
+      b.addEventListener('click', function () { goTo(k, true); });
+      dotsWrap.appendChild(b); return b;
     });
-  }
+    function setActive(k) { cur = k; cdots.forEach(function (d, j) { d.classList.toggle('on', j === k); }); }
+    function goTo(k, user) {
+      k = (k + cslides.length) % cslides.length;
+      track.scrollTo({ left: k * track.clientWidth, behavior: reduce ? 'auto' : 'smooth' });
+      setActive(k);
+      if (user) restart();
+    }
+    // Keep the active dot in sync with manual swipes.
+    track.addEventListener('scroll', function () {
+      clearTimeout(sst);
+      sst = setTimeout(function () { setActive(Math.round(track.scrollLeft / track.clientWidth)); }, 90);
+    }, { passive: true });
+    // Auto-advance (disabled under reduced motion), paused while interacting.
+    function startAuto() { if (reduce) return; stopAuto(); ctimer = setInterval(function () { if (!paused) goTo(cur + 1, false); }, 3200); }
+    function stopAuto() { if (ctimer) { clearInterval(ctimer); ctimer = null; } }
+    function restart() { stopAuto(); startAuto(); }
+    ['pointerdown', 'pointerenter'].forEach(function (ev) { track.addEventListener(ev, function () { paused = true; }); });
+    ['pointerup', 'pointerleave'].forEach(function (ev) { track.addEventListener(ev, function () { paused = false; }); });
+    setActive(0);
+    startAuto();
+  })();
   var heroPhoto = document.querySelector('.msg-hero .msg-photo');
 
   // ---- Message headlines: type romaji, then convert to Japanese, one
@@ -145,7 +167,6 @@
   // With animations off (or no IO), just show the held-back photos.
   if (reduce || !hasIO) {
     if (heroPhoto) heroPhoto.classList.add('shown');
-    if (stack) stack.classList.add('in');
   }
 
   [].slice.call(document.querySelectorAll('.typeconv')).forEach(function (el) {
@@ -160,7 +181,6 @@
     var wrap = el.closest('.msg-hero-text') || el.closest('.msg-bandtext');
     var copy = wrap ? wrap.querySelector('.msg-copy') : null;
     var onStart = null, onDone = function () { if (copy) copy.classList.add('copy-in'); };
-    if (el.closest('.msg-band')) { onStart = function () { if (stack) stack.classList.add('in'); }; }
     if (reduce || !hasIO || !segs.length) { if (onDone) onDone(); return; } // leave the final text as-is
     el.innerHTML = '<span class="compose"></span>';
     var gated = !!el.closest('.msg-hero'); // the first headline waits on the gate

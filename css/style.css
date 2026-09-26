@@ -98,13 +98,18 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
 .msg-titlecard h2{margin:0;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;letter-spacing:.04em;font-size:clamp(26px,3.2vw,40px);line-height:1.25;}
 .msg-titlecard .sub{font-family:'Barlow Condensed',sans-serif;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#9aa0a6;font-size:15px;margin-top:12px;}
 .msg-band{max-width:1480px;margin:0 auto;padding:clamp(56px,7vw,104px) clamp(20px,4vw,52px);display:grid;grid-template-columns:0.92fr 1.08fr;gap:clamp(30px,4vw,68px);align-items:center;}
-.msg-photostack{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.2vw,34px);}
-/* JS wraps each photo in a .snap so it can flutter down and get "pinned". */
-.msg-photostack .snap{position:relative;display:block;width:74%;}
-.msg-photostack .snap.b{align-self:flex-end;}
-.msg-photostack img,.msg-photostack .snap img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 26px 64px -32px rgba(0,0,0,.75);}
-.msg-photostack>img{width:74%;}
-.msg-photostack>img.b{align-self:flex-end;}
+/* Message photo carousel: horizontal snap-scroll gallery with dots. */
+.msg-carousel{position:relative;}
+.mc-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;border-radius:12px;}
+.mc-track::-webkit-scrollbar{display:none;}
+.mc-slide{position:relative;flex:0 0 100%;scroll-snap-align:center;margin:0;}
+.mc-slide img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;box-shadow:0 26px 64px -32px rgba(0,0,0,.75);}
+.mc-label{position:absolute;left:0;bottom:0;margin:12px;padding:5px 12px;border-radius:6px;
+  background:rgba(12,14,17,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  color:#fff;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;}
+.mc-dots{display:flex;justify-content:center;gap:9px;margin-top:16px;}
+.mc-dots button{appearance:none;border:0;padding:0;width:9px;height:9px;border-radius:50%;background:rgba(244,244,242,.32);cursor:pointer;transition:background .3s,transform .3s;}
+.mc-dots button.on{background:#fff;transform:scale(1.25);}
 .msg-lead{display:flex;gap:20px;align-items:flex-start;margin:0 0 clamp(28px,3vw,44px);}
 .msg-lead span{flex:0 0 auto;width:5px;align-self:stretch;min-height:1.2em;background:linear-gradient(180deg,var(--c1),var(--c2) 45%,var(--c3));border-radius:3px;}
 .msg-lead h3{margin:0;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:clamp(28px,4.2vw,50px);line-height:1.28;letter-spacing:.02em;}
@@ -252,16 +257,6 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
 .js .dropchars.line-in::after{transform:scaleX(1);}
 @keyframes charDrop{to{opacity:1;transform:translateY(0);}}
 
-/* MESSAGE photos — rise up gently, one after another from the top. */
-@keyframes riseUp{
-  0%{opacity:0;transform:translateY(48px);}
-  100%{opacity:1;transform:translateY(0);}
-}
-.js .msg-photostack .snap{opacity:0;}
-.msg-photostack.in .snap{animation:riseUp 1.7s cubic-bezier(.2,.7,.2,1) both;}
-.msg-photostack.in .snap:nth-child(1){animation-delay:0s;}
-.msg-photostack.in .snap:nth-child(2){animation-delay:.55s;}
-.msg-photostack.in .snap:nth-child(3){animation-delay:1.1s;}
 
 /* MESSAGE headlines — romaji typed, then "converted" segment by segment (IME
    style). Only the romaji currently being composed carries the dotted underline
@@ -284,7 +279,6 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   .js .philosophy{opacity:1!important;animation:none!important;}
   .dropchars .ch{opacity:1!important;transform:none!important;animation:none!important;}
   .js .dropchars::after{transform:none!important;}
-  .js .msg-photostack .snap{opacity:1!important;animation:none!important;}
   .js .msg-hero-text .msg-copy,.js .msg-bandtext .msg-copy{opacity:1!important;transform:none!important;}
   .js .co-card{opacity:1!important;transform:none!important;}
   .js .brand{opacity:1!important;transform:none!important;}
@@ -297,7 +291,8 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   .links-head p{white-space:normal;}
   /* Let body copy flow naturally on small screens instead of breaking at the
      desktop-designed <br> points (which orphan words on a phone). */
-  .philosophy .body p br,.msg-copy br,.brand-text p br,.links-head p br{display:none;}
+  /* Brand descriptions keep their break at the 、 (comma); other copy flows. */
+  .philosophy .body p br,.msg-copy br,.links-head p br{display:none;}
   .about-grid{grid-template-columns:1fr;}
   .philosophy{margin-bottom:clamp(-160px,-24vw,-80px);}
   .msg-hero{grid-template-columns:1fr;}
@@ -306,9 +301,6 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   .msg-hero-text .msg-copy{white-space:normal;}
   .msg-split{grid-template-columns:1fr;}
   .msg-band{grid-template-columns:1fr;gap:32px;}
-  .msg-photostack{flex-direction:row;flex-wrap:wrap;}
-  .msg-photostack .snap,.msg-photostack>img{width:46%;}
-  .msg-photostack .snap.b,.msg-photostack>img.b{align-self:auto;}
   .msg-split .msg-photo{order:-1;}
   .brand,.brand.from-left,.brand.from-right{grid-template-columns:1fr;height:auto;min-height:0;}
   /* photo returns to normal flow (stacked) on mobile */
@@ -345,13 +337,13 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   /* About: trim the card's side padding so the copy isn't pinched */
   #about{padding-top:clamp(56px,14vw,150px);}
   .philosophy{padding:clamp(30px,7vw,44px) clamp(18px,5vw,26px) clamp(34px,7vw,48px);}
-  .philosophy .lede{gap:12px;font-size:clamp(22px,6vw,36px);}
-  .philosophy .body p:last-child{font-size:clamp(22px,6vw,36px);}
+  /* Keep these two statement lines on a single line on phones. */
+  .philosophy .lede{gap:10px;font-size:clamp(15px,4.6vw,32px);white-space:nowrap;}
+  .philosophy .body p:last-child{font-size:clamp(14px,4.5vw,32px);white-space:nowrap;}
 
   /* Message: keep the three photos as one tidy, centered strip */
-  .msg-photostack{justify-content:center;gap:12px;}
-  .msg-photostack .snap,.msg-photostack>img{width:31%;}
-  .msg-hero-text .msg-lead h3,.msg-split h3{font-size:clamp(21px,5.6vw,38px);}
+  /* Smaller so "競争に負けることではありません。" fits one line (no orphaned ん。). */
+  .msg-hero-text .msg-lead h3,.msg-split h3{font-size:clamp(16px,4.8vw,34px);}
 
   /* Links: comfortable stacked cards */
   .brand-photo,.brand.from-left .brand-photo,.brand.from-right .brand-photo{min-height:172px;}
