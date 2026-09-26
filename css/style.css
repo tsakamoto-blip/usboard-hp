@@ -100,16 +100,20 @@ header nav a{font-size:15px;font-weight:700;letter-spacing:.06em;color:#35373c;}
 .msg-titlecard h2{margin:0;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:900;letter-spacing:.04em;font-size:clamp(26px,3.2vw,40px);line-height:1.25;}
 .msg-titlecard .sub{font-family:'Barlow Condensed',sans-serif;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#9aa0a6;font-size:15px;margin-top:12px;}
 .msg-band{max-width:1480px;margin:0 auto;padding:clamp(56px,7vw,104px) clamp(20px,4vw,52px);display:grid;grid-template-columns:0.92fr 1.08fr;gap:clamp(30px,4vw,68px);align-items:center;}
-/* Message photo carousel: horizontal snap-scroll gallery with dots. */
+/* Message photos — DESKTOP: the original stacked layout (rise-in on scroll).
+   PHONES turn this into a snap-scroll carousel (see the mobile block). */
 .msg-carousel{position:relative;}
-.mc-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;border-radius:12px;}
-.mc-track::-webkit-scrollbar{display:none;}
-.mc-slide{position:relative;flex:0 0 100%;scroll-snap-align:center;margin:0;}
-.mc-slide img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;box-shadow:0 26px 64px -32px rgba(0,0,0,.75);}
-.mc-label{position:absolute;left:0;bottom:0;margin:12px;padding:5px 12px;border-radius:6px;
-  background:rgba(12,14,17,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-  color:#fff;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;}
-.mc-dots{display:flex;justify-content:center;gap:9px;margin-top:16px;}
+.mc-track{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.2vw,34px);}
+.mc-slide{position:relative;flex:0 0 auto;width:74%;margin:0;}
+.mc-slide:nth-child(2){align-self:flex-end;}
+.mc-slide img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 26px 64px -32px rgba(0,0,0,.75);}
+@keyframes riseUp{0%{opacity:0;transform:translateY(48px);}100%{opacity:1;transform:translateY(0);}}
+.js .msg-carousel .mc-slide{opacity:0;}
+.msg-carousel.in .mc-slide{animation:riseUp 1.7s cubic-bezier(.2,.7,.2,1) both;}
+.msg-carousel.in .mc-slide:nth-child(1){animation-delay:0s;}
+.msg-carousel.in .mc-slide:nth-child(2){animation-delay:.55s;}
+.msg-carousel.in .mc-slide:nth-child(3){animation-delay:1.1s;}
+.mc-dots{display:none;justify-content:center;gap:9px;margin-top:16px;}
 .mc-dots button{appearance:none;border:0;padding:0;width:9px;height:9px;border-radius:50%;background:rgba(244,244,242,.32);cursor:pointer;transition:background .3s,transform .3s;}
 .mc-dots button.on{background:#fff;transform:scale(1.25);}
 .msg-lead{display:flex;gap:20px;align-items:flex-start;margin:0 0 clamp(28px,3vw,44px);}
@@ -282,6 +286,7 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
   .dropchars .ch{opacity:1!important;transform:none!important;animation:none!important;}
   .js .dropchars::after{transform:none!important;}
   .js .msg-hero-text .msg-copy,.js .msg-bandtext .msg-copy{opacity:1!important;transform:none!important;}
+  .js .msg-carousel .mc-slide{opacity:1!important;animation:none!important;}
   .js .co-card{opacity:1!important;transform:none!important;}
   .js .brand{opacity:1!important;transform:none!important;}
   .brand.in .lc-links a::before,.brand.in .lc-links a::after{transition:none!important;}
@@ -290,6 +295,14 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
 }
 
 @media (max-width:860px){
+  /* Message photos become a horizontal snap-scroll carousel on phones.
+     The aspect box is on the slide (not the img) — reliable in iOS Safari. */
+  .mc-track{flex-direction:row;align-items:flex-start;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;border-radius:12px;}
+  .mc-track::-webkit-scrollbar{display:none;}
+  .mc-slide,.msg-carousel.in .mc-slide{flex:0 0 100%;width:auto;aspect-ratio:16/10;scroll-snap-align:center;opacity:1;animation:none;overflow:hidden;border-radius:12px;}
+  .mc-slide:nth-child(2){align-self:flex-start;}
+  .mc-slide img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;border-radius:12px;}
+  .mc-dots{display:flex;}
   .links-head p{white-space:normal;}
   /* Let body copy flow naturally on small screens instead of breaking at the
      desktop-designed <br> points (which orphan words on a phone). */

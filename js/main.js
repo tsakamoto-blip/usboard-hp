@@ -107,10 +107,17 @@
   // ---- Company card: gentle rise ----
   reveal(document.querySelectorAll('.co-card'), { threshold: 0.25 });
 
-  // ---- Message photo carousel: auto-advancing, snap scroll, dots ----
-  (function initCarousel() {
+  // ---- Message photos: carousel on phones, stacked (rise-in) on desktop ----
+  (function initMsgPhotos() {
     var car = document.querySelector('.msg-carousel');
     if (!car) return;
+    // Desktop (>860px): keep the original stack, just reveal it on scroll.
+    if (!(window.matchMedia && window.matchMedia('(max-width: 860px)').matches)) {
+      reveal([car], { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
+      return;
+    }
+    // Phones: auto-advancing snap carousel with dots.
+    car.classList.add('in'); // slides already visible in carousel mode
     var track = car.querySelector('.mc-track');
     var dotsWrap = car.querySelector('.mc-dots');
     var cslides = [].slice.call(track.querySelectorAll('.mc-slide'));
