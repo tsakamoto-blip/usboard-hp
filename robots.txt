@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /local-preview/
+Disallow: /_budoux_test/
 
 Sitemap: https://www.usboard.co.jp/sitemap.xml

@@ -1,0 +1,22 @@
+# ==========================================================================
+# USBOARD 公式サイト 正規化リダイレクト (Apache 2.4)
+#   最終的に全アクセスを https://www.usboard.co.jp/ に統一する
+# ==========================================================================
+RewriteEngine On
+
+# --- 1) usboard.co.ltd (www有無問わず) → https://www.usboard.co.jp/ ---
+#     ※ usboard.co.ltd がこのサーバー(同一docroot)に向いている場合に有効
+RewriteCond %{HTTP_HOST} ^(www\.)?usboard\.co\.ltd$ [NC]
+RewriteRule ^ https://www.usboard.co.jp%{REQUEST_URI} [R=301,L]
+
+# --- 2) http → https (usboard.co.jp) ---
+#     直Apache(本物のSSL)とプロキシ/LB経由(SSL終端)の両構成で無限ループしないよう、
+#     %{HTTPS} と X-Forwarded-Proto の両方で「HTTPでない」ことを確認してから転送する。
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTP_HOST} ^(www\.)?usboard\.co\.jp$ [NC]
+RewriteRule ^ https://www.usboard.co.jp%{REQUEST_URI} [R=301,L]
+
+# --- 3) 非www → www (usboard.co.jp) ---
+RewriteCond %{HTTP_HOST} ^usboard\.co\.jp$ [NC]
+RewriteRule ^ https://www.usboard.co.jp%{REQUEST_URI} [R=301,L]

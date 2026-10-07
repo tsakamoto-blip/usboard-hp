@@ -243,6 +243,8 @@ footer{background:var(--charcoal);color:rgba(244,244,242,.7);}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(48px,6vw,80px);}
 .foot img{height:38px;width:auto;filter:grayscale(1) brightness(0) invert(1);}
 .foot p{margin:24px 0 0;font-size:12px;letter-spacing:.06em;color:rgba(244,244,242,.45);}
+.foot .foot-company{margin-top:24px;font-size:13px;color:rgba(244,244,242,.72);}
+.foot .foot-company + p{margin-top:6px;}
 .foot nav{display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
 .foot nav a{font-size:13px;letter-spacing:.06em;color:rgba(244,244,242,.72);}
 
